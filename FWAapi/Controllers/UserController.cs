@@ -19,6 +19,12 @@ public class UserController : ControllerBase
     public IList<UserView> Get(string? orderBy)
     {
         IList<UserView> u = _userService.ListForGrid(orderBy);
+
+        foreach(UserView user in u)
+        {
+            user.Password = string.Empty;
+        }
+
         return u;
     }
 }
