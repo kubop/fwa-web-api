@@ -44,6 +44,7 @@ public class UserController : ControllerBase
         {
             return NotFound();
         }
+        user.Password = "";
 
         var addressList = _addressService.GetAllAddresses();
 
