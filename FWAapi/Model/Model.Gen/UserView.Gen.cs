@@ -43,46 +43,18 @@ namespace FWAapi.Model
 			set { SetDbField(ref m_Password, value, nameof(this.Password)); }
 		}
 
-		private int? m_uAddressId;
-		public int? uAddressId
+		private int? m_AddressId;
+		public int? AddressId
 		{
-			get { return m_uAddressId; }
-			set { SetDbField(ref m_uAddressId, value, nameof(this.uAddressId)); }
+			get { return m_AddressId; }
+			set { SetDbField(ref m_AddressId, value, nameof(this.AddressId)); }
 		}
 
-		private int? m_aAddressId;
-		public int? aAddressId
+		private string m_Address = "";
+		public string Address
 		{
-			get { return m_aAddressId; }
-			set { SetDbField(ref m_aAddressId, value, nameof(this.aAddressId)); }
-		}
-
-		private string m_Street = "";
-		public string Street
-		{
-			get { return m_Street; }
-			set { SetDbField(ref m_Street, value, nameof(this.Street)); }
-		}
-
-		private int? m_Number;
-		public int? Number
-		{
-			get { return m_Number; }
-			set { SetDbField(ref m_Number, value, nameof(this.Number)); }
-		}
-
-		private string m_City = "";
-		public string City
-		{
-			get { return m_City; }
-			set { SetDbField(ref m_City, value, nameof(this.City)); }
-		}
-
-		private string m_ZipCode = "";
-		public string ZipCode
-		{
-			get { return m_ZipCode; }
-			set { SetDbField(ref m_ZipCode, value, nameof(this.ZipCode)); }
+			get { return m_Address; }
+			set { SetDbField(ref m_Address, value, nameof(this.Address)); }
 		}
 	}
 }
