@@ -1,6 +1,7 @@
 ﻿using FWAapi.Business;
 using FWAapi.Model;
 using FWAapi.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 namespace FWAapi.Controllers;
 
@@ -22,7 +23,7 @@ public class UserController : ControllerBase
     {
         IList<UserView> u = _userService.ListForGrid(orderBy);
 
-        foreach(UserView user in u)
+        foreach (UserView user in u)
         {
             user.Password = string.Empty;
         }
@@ -55,5 +56,39 @@ public class UserController : ControllerBase
         };
 
         return Ok(model);
+    }
+
+    [HttpPost("{id}")]
+    public IActionResult Edit(int id, [FromBody] User user)
+    {
+        if (id != user.UserId)
+        {
+            return NotFound();
+        }
+
+        var oldUser = _userService.GetObjectById(id);
+        if (oldUser == null)
+        {
+            return NotFound();
+        }
+
+        if (!string.IsNullOrEmpty(user.NewPassword))
+        {
+            user.Password = user.NewPassword;
+        }
+        else
+        {
+            user.Password = oldUser.Password;
+        }
+
+        ModelState.ClearValidationState(nameof(user));
+        TryValidateModel(user, nameof(user));
+
+        if (ModelState.IsValid)
+        {
+            _userService.Update(user);
+        }
+
+        return Ok();
     }
 }

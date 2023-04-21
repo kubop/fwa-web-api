@@ -21,4 +21,9 @@ public class UserService
     {
         return _business.Get<UserViewBusiness>().ListForGrid(orderBy);
     }
+
+    public void Update(User obj, IGenericScope scope = null)
+    {
+        _business.Get<UserBusiness>().Update(obj);
+    }
 }
