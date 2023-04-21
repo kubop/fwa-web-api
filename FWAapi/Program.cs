@@ -35,7 +35,7 @@ builder.Services.AddScoped<IBusinessProvider>(serviceProvider =>
 });
 
 builder.Services.AddScoped<UserService>();
-//builder.Services.AddScoped<AddressService>();
+builder.Services.AddScoped<AddressService>();
 
 var app = builder.Build();
 
