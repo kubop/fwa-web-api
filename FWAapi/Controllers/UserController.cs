@@ -58,7 +58,7 @@ public class UserController : ControllerBase
         return Ok(model);
     }
 
-    [HttpPost("{id}")]
+    [HttpPut("{id}")]
     public IActionResult Edit(int id, [FromBody] User user)
     {
         if (id != user.UserId)
