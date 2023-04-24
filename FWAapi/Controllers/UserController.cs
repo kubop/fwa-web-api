@@ -81,15 +81,15 @@ public class UserController : ControllerBase
             oldUser.Password = user.NewPassword;
         }
 
-        ModelState.ClearValidationState(nameof(oldUser));
-        TryValidateModel(oldUser, nameof(oldUser));
-
-        if (ModelState.IsValid)
+        var validationResult = Validate(oldUser);
+        if (validationResult == "success")
         {
             _userService.Update(oldUser);
+            return Ok();
+        } else
+        {
+            return BadRequest(validationResult);
         }
-
-        return Ok();
     }
 
     [HttpDelete("{id}")]
@@ -104,5 +104,19 @@ public class UserController : ControllerBase
         _userService.SoftDelete(userToDelete); // TODO: Real soft delete
 
         return Ok();
+    }
+
+    private static string Validate(User user)
+    {
+        if (user == null) return "Error: User not found";
+
+        if (string.IsNullOrEmpty(user.FirstName)) return "Error: FirstName attribute is required";
+        if (string.IsNullOrEmpty(user.LastName)) return "Error: LastName attribute is required";
+        if (string.IsNullOrEmpty(user.Login)) return "Error: Login attribute is required";
+        if (string.IsNullOrEmpty(user.Password)) return "Error: Password attribute is required";
+
+        if (user.Login.Length > 10) return "Error: Login attribute can't exceed 10 characters";
+
+        return "success";
     }
 }
