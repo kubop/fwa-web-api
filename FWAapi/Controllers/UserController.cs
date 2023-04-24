@@ -91,4 +91,18 @@ public class UserController : ControllerBase
 
         return Ok();
     }
+
+    [HttpDelete("{id}")]
+    public  IActionResult Delete(int id)
+    {
+        User userToDelete = _userService.GetObjectById(id);
+        if (userToDelete == null)
+        {
+            return NotFound();
+        }
+
+        _userService.SoftDelete(userToDelete); // TODO: Real soft delete
+
+        return Ok();
+    }
 }

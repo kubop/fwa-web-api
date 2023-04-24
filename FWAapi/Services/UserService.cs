@@ -26,4 +26,9 @@ public class UserService
     {
         _business.Get<UserBusiness>().Update(obj);
     }
+
+    public void SoftDelete(User user, IGenericScope scope = null)
+    {
+        _business.Get<UserBusiness>().Delete(user); // TODO: Real soft delete
+    }
 }
