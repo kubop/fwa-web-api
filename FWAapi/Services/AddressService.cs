@@ -22,9 +22,9 @@ public class AddressService
         return _business.Get<AddressBusiness>().GetAllAddresses();
     }
 
-    public IList<Address> GetAllAddressesWithCount(IGenericScope scope = null)
+    public IList<Address> GetAllAddressesWithCount(string? orderBy, IGenericScope scope = null)
     {
-        return _business.Get<AddressBusiness>().GetAllAddressesWithCount();
+        return _business.Get<AddressBusiness>().GetAllAddressesWithCount(orderBy);
     }
 
     public void SoftDelete(Address address, IGenericScope scope = null)

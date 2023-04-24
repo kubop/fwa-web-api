@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using FWAapi.DbAccess;
 using FWAapi.Model;
@@ -17,7 +18,7 @@ public partial class AddressBusiness
         });
     }
 
-    public List<Address> GetAllAddressesWithCount()
+    public List<Address> GetAllAddressesWithCount(string? orderBy)
     {
         return Execute((IScope s) =>
         {

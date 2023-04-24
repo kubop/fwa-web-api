@@ -19,7 +19,7 @@ namespace FWAapi.Controllers
         [HttpGet]
         public IList<Address> Get(string? orderBy)
         {
-            IList<Address> u = _addressService.GetAllAddressesWithCount();
+            IList<Address> u = _addressService.GetAllAddressesWithCount(orderBy);
             return u;
         }
     }
