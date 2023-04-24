@@ -63,7 +63,7 @@ public class UserController : ControllerBase
     {
         if (id != user.UserId)
         {
-            return NotFound();
+            return BadRequest();
         }
 
         var oldUser = _userService.GetObjectById(id);
@@ -72,21 +72,21 @@ public class UserController : ControllerBase
             return NotFound();
         }
 
+        oldUser.FirstName = user.FirstName;
+        oldUser.LastName = user.LastName;
+        oldUser.Login = user.Login;
+        oldUser.AddressId = user.AddressId;
         if (!string.IsNullOrEmpty(user.NewPassword))
         {
-            user.Password = user.NewPassword;
-        }
-        else
-        {
-            user.Password = oldUser.Password;
+            oldUser.Password = user.NewPassword;
         }
 
-        ModelState.ClearValidationState(nameof(user));
-        TryValidateModel(user, nameof(user));
+        ModelState.ClearValidationState(nameof(oldUser));
+        TryValidateModel(oldUser, nameof(oldUser));
 
         if (ModelState.IsValid)
         {
-            _userService.Update(user);
+            _userService.Update(oldUser);
         }
 
         return Ok();
