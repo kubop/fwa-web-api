@@ -2,6 +2,7 @@
 using FWAapi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static FWAapi.Controllers.UserController;
 
 namespace FWAapi.Controllers
 {
@@ -21,6 +22,42 @@ namespace FWAapi.Controllers
         {
             IList<Address> u = _addressService.GetAllAddressesWithCount(orderBy);
             return u;
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Edit(int id)
+        {
+            var address = _addressService.GetObjectById(id);
+            if (address == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(address);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Edit(int id, [FromBody] Address address)
+        {
+            if (id != address.AddressId)
+            {
+                return BadRequest();
+            }
+
+            var oldAddress = _addressService.GetObjectById(id);
+            if (oldAddress == null)
+            {
+                return NotFound();
+            }
+
+            oldAddress.Street = address.Street;
+            oldAddress.Number = address.Number;
+            oldAddress.ZipCode = address.ZipCode;
+            oldAddress.City = address.City;
+
+            _addressService.Update(oldAddress);
+                
+            return Ok();
         }
 
         [HttpDelete("{id}")]
