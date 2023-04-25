@@ -22,5 +22,19 @@ namespace FWAapi.Controllers
             IList<Address> u = _addressService.GetAllAddressesWithCount(orderBy);
             return u;
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            Address addressToDelete = _addressService.GetObjectById(id);
+            if (addressToDelete == null)
+            {
+                return NotFound();
+            }
+
+            _addressService.SoftDelete(addressToDelete); // TODO: Real soft delete
+
+            return Ok();
+        }
     }
 }
