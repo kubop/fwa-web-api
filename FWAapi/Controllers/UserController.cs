@@ -1,7 +1,9 @@
-﻿using FWAapi.Business;
+﻿using Azure;
+using FWAapi.Business;
 using FWAapi.Model;
 using FWAapi.Services;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 namespace FWAapi.Controllers;
 
@@ -87,6 +89,43 @@ public class UserController : ControllerBase
             _userService.Update(oldUser);
             return Ok();
         } else
+        {
+            return BadRequest(validationResult);
+        }
+    }
+
+    [HttpPatch("{id}")]
+    public IActionResult Patch(int id, [FromBody] JsonPatchDocument<User> user)
+    {
+        //if (id != user)
+        //{
+        //    return BadRequest();
+        //}
+
+        var oldUser = _userService.GetObjectById(id);
+        if (oldUser == null)
+        {
+            return NotFound();
+        }
+
+        user.ApplyTo(oldUser);
+
+        //oldUser.FirstName = user.FirstName;
+        //oldUser.LastName = user.LastName;
+        //oldUser.Login = user.Login;
+        //oldUser.AddressId = user.AddressId;
+        //if (!string.IsNullOrEmpty(user.NewPassword))
+        //{
+        //    oldUser.Password = user.NewPassword;
+        //}
+
+        var validationResult = Validate(oldUser);
+        if (validationResult == "success")
+        {
+            _userService.Update(oldUser);
+            return Ok();
+        }
+        else
         {
             return BadRequest(validationResult);
         }
