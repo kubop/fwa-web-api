@@ -3,6 +3,7 @@ using FWAapi.Business;
 using FWAapi.Model;
 using FWAapi.Services;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 namespace FWAapi.Controllers;
@@ -74,6 +75,12 @@ public class UserController : ControllerBase
             return NotFound();
         }
 
+        // Check if the record was modified by someone else in the meantime
+        if (oldUser.Modified != user.Modified)
+        {
+            return Conflict();
+        }
+
         oldUser.FirstName = user.FirstName;
         oldUser.LastName = user.LastName;
         oldUser.Login = user.Login;
@@ -87,7 +94,7 @@ public class UserController : ControllerBase
         if (validationResult == "success")
         {
             _userService.Update(oldUser);
-            return Ok();
+            return Ok(new { newModified = oldUser.Modified });
         } else
         {
             return BadRequest(validationResult);
