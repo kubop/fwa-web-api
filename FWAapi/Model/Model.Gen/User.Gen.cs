@@ -57,5 +57,12 @@ namespace FWAapi.Model
 			get { return m_Modified; }
 			set { SetDbField(ref m_Modified, value, nameof(this.Modified)); }
 		}
+
+		private byte[] m_VerCol;
+		public byte[] VerCol
+		{
+			get { return m_VerCol; }
+			set { SetDbField(ref m_VerCol, value, nameof(this.VerCol)); }
+		}
 	}
 }

@@ -39,6 +39,7 @@ namespace FWAapi.DbAccess
 			entity.Property(x => x.Password).HasColumnName("sPassword").IsRequired();
 			entity.Property(x => x.AddressId).HasColumnName("nAddressId");
 			entity.Property(x => x.Modified).HasColumnName("dtModified").SetOnUpdateTo(() => Helpers.Calendar.Now());
+			entity.Property(x => x.VerCol).HasColumnName("VerCol");
 		}
 
 		private void OnUserViewModelCreating(ModelBuilder modelBuilder)
