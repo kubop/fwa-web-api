@@ -50,5 +50,12 @@ namespace FWAapi.Model
 			get { return m_AddressId; }
 			set { SetDbField(ref m_AddressId, value, nameof(this.AddressId)); }
 		}
+
+		private DateTime m_Modified;
+		public DateTime Modified
+		{
+			get { return m_Modified; }
+			set { SetDbField(ref m_Modified, value, nameof(this.Modified)); }
+		}
 	}
 }
