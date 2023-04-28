@@ -76,7 +76,7 @@ public class UserController : ControllerBase
         }
 
         // Check if the record was modified by someone else in the meantime
-        if (oldUser.Modified != user.Modified)
+        if (!oldUser.VerCol.SequenceEqual(user.VerCol))
         {
             return Conflict();
         }
@@ -94,7 +94,7 @@ public class UserController : ControllerBase
         if (validationResult == "success")
         {
             _userService.Update(oldUser);
-            return Ok(new { newModified = oldUser.Modified });
+            return Ok(new { newVerCol = oldUser.VerCol });
         } else
         {
             return BadRequest(validationResult);
